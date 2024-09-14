@@ -13,18 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Prepare build directory
-        run: |
-          mkdir build
-          rsync -av --progress ./ build/ --exclude composer.json --exclude composer.lock --exclude README.md --exclude CODE-OF-CONDUCT.md --exclude tests
-
-      - name: Create Zip Archive
-        run: |
-          cd build
-          zip -r9 ../index-wp-mysql-for-speed.zip .
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: index-wp-mysql-for-speed
-          path: index-wp-mysql-for-speed.zip
+          path: |
+            ./
+            !composer.json
+            !composer.lock
+            !README.md
+            !CODE-OF-CONDUCT.md
+            !tests/**
+          compression-level: 9
