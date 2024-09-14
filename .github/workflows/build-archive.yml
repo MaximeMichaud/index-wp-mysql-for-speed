@@ -13,16 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create Zip Archive
+        run: |
+          zip -r9 index-wp-mysql-for-speed.zip . \
+          -x "composer.json" \
+          -x "composer.lock" \
+          -x "README.md" \
+          -x "CODE-OF-CONDUCT.md" \
+          -x "tests/*"
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: index-wp-mysql-for-speed
-          path: |
-            ./**
-          exclude: |
-            composer.json
-            composer.lock
-            README.md
-            CODE-OF-CONDUCT.md
-            tests/**
-          compression-level: 9
+          path: index-wp-mysql-for-speed.zip
